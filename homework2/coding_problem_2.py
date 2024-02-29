@@ -26,6 +26,7 @@ datetoday_split = datetoday.split()
 input_date = None
 my_file = open("inputDates.txt", "r")
 dates = my_file.readlines()
+my_file2 = open("parsedDates.txt", "a")
 for date in dates:
     input_date = date
     input_split = input_date.split()
@@ -43,7 +44,7 @@ for date in dates:
                 if months[input_split[0]] == months[datetoday_split[0]]:
                     if int(input_split[1]) <= int(input_split[1]):
                         output = str(months[input_split[0]]) + "/" + input_split[1] + "/" + input_split[2]
-                        print(output)
+                        my_file2.write(output + "\n")
                         continue
                     else:
                         continue
@@ -51,11 +52,11 @@ for date in dates:
                     continue
                 else:
                     output = str(months[input_split[0]]) + "/" + input_split[1] + "/" + input_split[2]
-                    print(output)
+                    my_file2.write(output + "\n")
                     continue
             else:
                 output = str(months[input_split[0]]) + "/" + input_split[1] + "/" + input_split[2]
-                print(output)
+                my_file2.write(output + "\n")
                 continue
         else:
             continue
