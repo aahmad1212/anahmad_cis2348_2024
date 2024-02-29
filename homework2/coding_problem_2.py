@@ -24,8 +24,10 @@ today = datetime.date.today()
 datetoday = today.strftime("%B %d, %Y")
 datetoday_split = datetoday.split()
 input_date = None
-while input_date != "-1":
-    input_date = str(input())
+my_file = open("inputDates.txt", "r")
+dates = my_file.readlines()
+for date in dates:
+    input_date = date
     input_split = input_date.split()
     if input_date == "-1":
         continue
@@ -33,7 +35,7 @@ while input_date != "-1":
         continue
     if input_split[0] not in validmonths and input_split[1] not in validdays and input_split[2] not in validyears:
         continue
-    else:
+    elif input_split[1] in validdays:
         input_split[1] = input_split[1].replace(",", "")
         datetoday_split[1] = datetoday_split[1].replace(",", "")
         if int(input_split[2]) <= int(datetoday_split[2]):
