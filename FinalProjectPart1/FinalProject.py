@@ -118,7 +118,7 @@ with open("FullRoster.csv", "a", newline="") as csvfile:
 # the row to the file.
 for i in majors_list:
     filename = i.replace(" ", "")
-    with open(f"{filename}.csv", "a", newline="") as csvfile:
+    with open(f"{filename}Students.csv", "a", newline="") as csvfile:
         majors_writer = csv.writer(csvfile)
         for row in list_per_major:
             if students_dict[str(row[0])].major == i:
