@@ -109,7 +109,7 @@ list_per_major.sort(key=id_num)
 disciplined_students.sort(key=date)
 
 # Creates FullRoster.csv and writes the table to it.
-with open("FullRoster.csv", "a", newline="") as csvfile:
+with open("FullRoster.csv", "w", newline="") as csvfile:
     roster_writer = csv.writer(csvfile)
     for row in full_roster:
         roster_writer.writerow(row)
@@ -118,7 +118,7 @@ with open("FullRoster.csv", "a", newline="") as csvfile:
 # the row to the file.
 for i in majors_list:
     filename = i.replace(" ", "")
-    with open(f"{filename}Students.csv", "a", newline="") as csvfile:
+    with open(f"{filename}Students.csv", "w", newline="") as csvfile:
         majors_writer = csv.writer(csvfile)
         for row in list_per_major:
             if students_dict[str(row[0])].major == i:
@@ -126,7 +126,7 @@ for i in majors_list:
 
 # Checks if a student meets all criteria (GPA above 3.8, hasn't graduated yet, not disciplined). If so, it writes the
 # the row to the file.
-with open("ScholarshipCandidates.csv", "a", newline="") as csvfile:
+with open("ScholarshipCandidates.csv", "w", newline="") as csvfile:
     scholarship_writer = csv.writer(csvfile)
     for row in scholarship_candidates:
         date_compare = datetime.strptime(students_dict[str(row[0])].grad_date, "%m/%d/%Y")
@@ -134,7 +134,7 @@ with open("ScholarshipCandidates.csv", "a", newline="") as csvfile:
             scholarship_writer.writerow(row)
 
 # Checks if a student has been disciplined. If so, it writes the row to the file.
-with open("DisciplinedStudents.csv", "a", newline="") as csvfile:
+with open("DisciplinedStudents.csv", "w", newline="") as csvfile:
     disciplined_writer = csv.writer(csvfile)
     for row in disciplined_students:
         if students_dict[str(row[0])].disc_action == "Y":
