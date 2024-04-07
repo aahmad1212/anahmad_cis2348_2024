@@ -8,7 +8,7 @@ from datetime import datetime
 # GPA is stored as a float so we can compare it in order to determine if a student is eligible for a scholarship.
 class Student:
     def __init__(
-            self, student_id=0, major="null", first_name="null", last_name="null", gpa=0.0, grad_date="1/1/1970",
+            self, student_id="null", major="null", first_name="null", last_name="null", gpa=0.0, grad_date="1/1/1970",
             disc_action="null"
     ):
         self.student_id = student_id
@@ -31,7 +31,7 @@ def lastname(a):
 
 # Sort by student ID
 def id_num(a):
-    return a[0]
+    return int(a[0])
 
 
 # Sort by date
@@ -65,7 +65,7 @@ with open("StudentsMajorsList.csv") as csvfile:
             majors_list.append(row[3])
         # Creates a student object using the data in each row, and associates them with the student ID number in the
         # dictionary.
-        student = Student(student_id=int(row[0]), major=row[3], first_name=row[2], last_name=row[1], disc_action=row[4])
+        student = Student(student_id=row[0], major=row[3], first_name=row[2], last_name=row[1], disc_action=row[4])
         students.append(student)
         students_dict[row[0]] = student
 
@@ -74,7 +74,7 @@ with open("GPAList.csv") as csvfile:
     for row in gpa_reader:
         for student in students_dict:
             # Matches ID in GPAList with ID of a Student. Updates the GPA attribute with corresponding GPA value.
-            if int(row[0]) == students_dict[student].student_id:
+            if row[0] == students_dict[student].student_id:
                 students_dict[student].gpa = float(row[1])
 
 with open("GraduationDatesList.csv") as csvfile:
@@ -82,7 +82,7 @@ with open("GraduationDatesList.csv") as csvfile:
     for row in grad_reader:
         for student in students_dict:
             # Updates graduation date attribute of students with their graduation dates.
-            if int(row[0]) == students_dict[student].student_id:
+            if row[0] == students_dict[student].student_id:
                 students_dict[student].grad_date = row[1]
 
 # Now that we have all of the student data, we can build our tables.
@@ -121,7 +121,7 @@ for i in majors_list:
     with open(f"{filename}Students.csv", "w", newline="") as csvfile:
         majors_writer = csv.writer(csvfile)
         for row in list_per_major:
-            if students_dict[str(row[0])].major == i:
+            if students_dict[row[0]].major == i:
                 majors_writer.writerow(row)
 
 # Checks if a student meets all criteria (GPA above 3.8, hasn't graduated yet, not disciplined). If so, it writes the
@@ -129,13 +129,13 @@ for i in majors_list:
 with open("ScholarshipCandidates.csv", "w", newline="") as csvfile:
     scholarship_writer = csv.writer(csvfile)
     for row in scholarship_candidates:
-        date_compare = datetime.strptime(students_dict[str(row[0])].grad_date, "%m/%d/%Y")
-        if date_compare > today and students_dict[str(row[0])].disc_action != "Y" and row[4] > 3.8:
+        date_compare = datetime.strptime(students_dict[row[0]].grad_date, "%m/%d/%Y")
+        if date_compare > today and students_dict[row[0]].disc_action != "Y" and row[4] > 3.8:
             scholarship_writer.writerow(row)
 
 # Checks if a student has been disciplined. If so, it writes the row to the file.
 with open("DisciplinedStudents.csv", "w", newline="") as csvfile:
     disciplined_writer = csv.writer(csvfile)
     for row in disciplined_students:
-        if students_dict[str(row[0])].disc_action == "Y":
+        if students_dict[row[0]].disc_action == "Y":
             disciplined_writer.writerow(row)
