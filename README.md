@@ -6,5 +6,5 @@ Folder "homework3" contains assigned labs for Homework #3
 
 Folder "homework4" contains assigned labs for Homework #4
 
-Folder "FinalProjectPart1" contains Final Project Part 1
+Folder "FinalProject" contains Final Project Part 1 and Part 2
 
